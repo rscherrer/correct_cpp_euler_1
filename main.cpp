@@ -1,38 +1,32 @@
+#include <algorithm>
 #include <cassert>
 #include <iostream>
+#include <iterator>
+#include <numeric>
 #include <string>
 #include <vector>
 
-/// Implementation of bool_to_coin main function
-int do_main(const std::vector<std::string>& args) 
+/// Removes all values in v that are multiples of x
+void remove_multiples(
+  std::vector<int>& v,
+  const int x
+)
 {
-  if (args.size() != 2) 
-  {
-    return 1;
-  }
-  if (args[1] == "true") 
-  { 
-    std::cout << "heads\n";   
-  }
-  else if (args[1] == "false") 
-  { 
-    std::cout << "tails\n"; 
-  }
-  else 
-  {
-    return 1;
-  }
-  return 0;
+  const auto new_end = std::remove_if(
+    std::begin(v),
+    std::end(v),
+    [x](const int i) { return i % x == 0; }
+  );
+  v.erase(new_end, std::end(v));
 }
 
-
-/// bool_to_coin main function, that also tests its implementation
-int main(int argc, char* argv[])
+/// Find the sum of all the multiples of 3 or 5 below 1000
+int main()
 {
-  assert(do_main( { "bool_to_coin" } ) == 1);
-  assert(do_main( { "bool_to_coin", "true" } ) == 0);
-  assert(do_main( { "bool_to_coin", "false" } ) == 0);
-  assert(do_main( { "bool_to_coin", "nonsense" } ) == 1);
-  assert(do_main( { "bool_to_coin", "true", "false" } ) == 1);
-  return do_main(std::vector<std::string>(argv, argv + argc));
+  std::vector<int> v(1000, 0);
+  std::iota(std::begin(v), std::end(v), 0);
+  remove_multiples(v, 3);
+  remove_multiples(v, 5);
+  const int sum = std::accumulate(std::begin(v), std::end(v), 0);
+  std::cout << sum << '\n';
 }
