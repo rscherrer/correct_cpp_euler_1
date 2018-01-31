@@ -8,25 +8,25 @@
 
 /// Removes all values in v that are multiples of x
 void remove_multiples(
-  std::vector<int>& v,
-  const int x
+  std::vector<int>& values,
+  const int multiple
 )
 {
   const auto new_end = std::remove_if(
-    std::begin(v),
-    std::end(v),
-    [x](const int i) { return i % x == 0; }
+    std::begin(values),
+    std::end(values),
+    [multiple](const int value) { return value % multiple == 0; }
   );
-  v.erase(new_end, std::end(v));
+  values.erase(new_end, std::end(values));
 }
 
 /// Find the sum of all the multiples of 3 or 5 below 1000
 int main()
 {
-  std::vector<int> v(1000, 0);
-  std::iota(std::begin(v), std::end(v), 0);
-  remove_multiples(v, 3);
-  remove_multiples(v, 5);
-  const int sum = std::accumulate(std::begin(v), std::end(v), 0);
+  std::vector<int> values(1000, 0);
+  std::iota(std::begin(values), std::end(values), 0);
+  remove_multiples(values, 3);
+  remove_multiples(values, 5);
+  const int sum = std::accumulate(std::begin(values), std::end(values), 0);
   std::cout << sum << '\n';
 }
