@@ -6,11 +6,11 @@
 int main()
 {
 
-    std::vector<size_t> multiples;
+    std::vector<int> multiples;
 
     // Find all the multiples of 3 or 5 below 1000 and put them in a vector
-    for (size_t number = 1u; number < 999u; ++number) {
-        if (number % 3u == 0u || number % 5u == 0u) {
+    for (int number = 1; number < 999; ++number) {
+        if (number % 3 == 0 || number % 5 == 0) {
             multiples.push_back(number);
         }
     }
